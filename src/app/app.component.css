@@ -1,7 +1,14 @@
 .cell {
   margin: 5px;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border: 1px solid black;
   color: #00000063;
+  float: left;
+  position: relative;
+  cursor: pointer;
+}
+
+.inner-shadow{
+	box-shadow:  inset 0 0 10px 3px #ff00eb;
 }

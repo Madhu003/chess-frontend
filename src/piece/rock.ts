@@ -7,7 +7,14 @@ export class Rock  implements Piece{
 		this.symbol = (type == "white") ? "&#9814;" : "&#9820;";
 	}
 
-	getArrayOfPosibleMove() {
-		
+	getArrayOfPosibleMove(x, y) {
+		let possiblePaths = [];
+
+		for(let i = 0 ; i < 8 ; i++){
+			possiblePaths.push({x: x, y: i});
+			possiblePaths.push({x: i, y: y});
+		}
+
+		return possiblePaths;
 	}
 }

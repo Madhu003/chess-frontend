@@ -10,12 +10,30 @@ import { Pawn } from "../piece/pawn";
   providedIn: 'root'
 })
 export class ChessArrangementService {
+	blackTeamStartingPoisition: Array<Object>;
+	whiteTeamStartingPoisition: Array<Object>;
 
   constructor() { 
-  	console.log(Bioshop)
-  }
+  	this.blackTeamStartingPoisition = [
+  		new Rock("black"),
+  		new Bioshop("black"),
+  		new Knight("black"),
+  		new Queen("black"),
+  		new King("black"),
+  		new Knight("black"),
+  		new Bioshop("black"),
+  		new Rock("black")
+  	];
 
-  ngOnInit() {
-  	console.log(Bioshop)
+  	this.whiteTeamStartingPoisition = [
+  		new Rock("white"),
+  		new Bioshop("white"),
+  		new Knight("white"),
+  		new King("white"),
+  		new Queen("white"),
+  		new Knight("white"),
+  		new Bioshop("white"),
+  		new Rock("white")
+  	];
   }
 }
