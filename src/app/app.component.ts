@@ -71,7 +71,7 @@ export class AppComponent {
                 cell.isActiveCell = 0;
             });
         });
-    }
+    } 
 
     onClick(cell){
         this.clearAllCellFromAtiveState();
@@ -79,7 +79,7 @@ export class AppComponent {
         if(cell.piece) {
             cell.isActiveCell = 1;
             let path = cell.piece.getArrayOfPosibleMove(cell.x, cell.y);
-
+            console.log(path);
             path.forEach(cordinates => {
                 let cellForPatch = this.getCell(cordinates.x, cordinates.y);
                 console.log(cellForPatch)
