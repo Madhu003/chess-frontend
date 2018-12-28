@@ -11,14 +11,15 @@ export class Pawn  implements Piece{
 
 	getArrayOfPosibleMove(x, y) {
 		let posiblepaths = [];
+		
 		if(this.type == "white") {
 			posiblepaths.push({x: x, y: y-1});
 			posiblepaths.push({x: x, y: y-2});
-			return posiblepaths;
 		} else {
 			posiblepaths.push({x: x, y: y+1});
 			posiblepaths.push({x: x, y: y+2});
-			return posiblepaths;
 		}
+
+		return posiblepaths;
 	}
 }

@@ -13,27 +13,27 @@ export class ChessArrangementService {
 	blackTeamStartingPoisition: Array<Object>;
 	whiteTeamStartingPoisition: Array<Object>;
 
-  constructor() { 
-  	this.blackTeamStartingPoisition = [
-  		new Rock("black"),
-  		new Bioshop("black"),
-  		new Knight("black"),
-  		new Queen("black"),
-  		new King("black"),
-  		new Knight("black"),
-  		new Bioshop("black"),
-  		new Rock("black")
-  	];
+    constructor() { 
+  	    this.blackTeamStartingPoisition = [
+  		    new Rock("black"),
+  		    new Bioshop("black"),
+  		    new Knight("black"),
+            new King("black"),
+  		    new Queen("black"),
+  		    new Knight("black"),
+  		    new Bioshop("black"),
+  		    new Rock("black")
+  	    ];
 
-  	this.whiteTeamStartingPoisition = [
-  		new Rock("white"),
-  		new Bioshop("white"),
-  		new Knight("white"),
-  		new King("white"),
-  		new Queen("white"),
-  		new Knight("white"),
-  		new Bioshop("white"),
-  		new Rock("white")
-  	];
-  }
+  	    this.whiteTeamStartingPoisition = [
+  		    new Rock("white"),
+  		    new Bioshop("white"),
+  		    new Knight("white"),
+  		    new Queen("white"),
+            new King("white"),
+  		    new Knight("white"),
+  		    new Bioshop("white"),
+  		    new Rock("white")
+  	    ];
+    }
 }
