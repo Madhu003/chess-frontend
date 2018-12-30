@@ -1,11 +1,12 @@
-import {Piece} from "./piece";
+import { Piece } from "./piece";
+import { PieceType } from "../app/piece-type.enum";
 
 export class Knight implements Piece{
 	symbol: String;
-	type: String;
+	type: PieceType;
 
 	constructor(type){
-		this.symbol = (type == "white") ? "&#9816;" : "&#9822;";
+		this.symbol = (type == PieceType.WHITE) ? "&#9816;" : "&#9822;";
 		this.type = type;
 	}
 

@@ -1,10 +1,12 @@
-import {Piece} from "./piece";
+import { Piece } from "./piece";
+import { PieceType } from "../app/piece-type.enum";
 
 export class Rock  implements Piece{
 	symbol: String;
+	type: PieceType;
 
 	constructor(type){
-		this.symbol = (type == "white") ? "&#9814;" : "&#9820;";
+		this.symbol = (type == PieceType.WHITE) ? "&#9814;" : "&#9820;";
 	}
 
 	getArrayOfPosibleMove(x, y) {
@@ -15,6 +17,7 @@ export class Rock  implements Piece{
 
 		for(let i = 0 ; i < 8 ; i++){
 			let manipluationFector = i + 1;
+
 			let down = { x: x, y : y + manipluationFector} ;
 			if(down.x >= 0 && down.x <= 7 && down.y >= 0 && down.y <= 7){
 				downPath.push(down);	

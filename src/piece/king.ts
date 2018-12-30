@@ -1,12 +1,13 @@
-import {Piece} from "./piece";
+import { Piece } from "./piece";
+import { PieceType } from "../app/piece-type.enum";
 
 export class King  implements Piece{
 	symbol: String;
-	type: String;
+	type: PieceType;
 
 	constructor(type){
 		this.type = type;
-		this.symbol = (type == "white") ? "&#9813;" : "&#9819;";
+		this.symbol = (type == PieceType.WHITE) ? "&#9813;" : "&#9819;";
 	}
 
 	getArrayOfPosibleMove(x, y) {

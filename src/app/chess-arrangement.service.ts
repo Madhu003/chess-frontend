@@ -5,6 +5,7 @@ import { Queen } from "../piece/queen";
 import { Knight } from "../piece/knight";
 import { Rock } from "../piece/rock";
 import { Pawn } from "../piece/pawn";
+import { PieceType } from "./piece-type.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -14,26 +15,27 @@ export class ChessArrangementService {
 	whiteTeamStartingPoisition: Array<Object>;
 
     constructor() { 
+        console.log(PieceType);
   	    this.blackTeamStartingPoisition = [
-  		    new Rock("black"),
-  		    new Bioshop("black"),
-  		    new Knight("black"),
-          new King("black"),
-  		    new Queen("black"),
-  		    new Knight("black"),
-  		    new Bioshop("black"),
-  		    new Rock("black")
+  		    new Rock(PieceType.BLACK),
+  		    new Bioshop(PieceType.BLACK),
+  		    new Knight(PieceType.BLACK),
+            new King(PieceType.BLACK),
+  		    new Queen(PieceType.BLACK),
+  		    new Knight(PieceType.BLACK),
+  		    new Bioshop(PieceType.BLACK),
+  		    new Rock(PieceType.BLACK)
   	    ];
 
   	    this.whiteTeamStartingPoisition = [
-  		    new Rock("white"),
-  		    new Bioshop("white"),
-  		    new Knight("white"),
-          new King("white"),
-  		    new Queen("white"),
-  		    new Knight("white"),
-  		    new Bioshop("white"),
-  		    new Rock("white")
+  		    new Rock(PieceType.WHITE),
+  		    new Bioshop(PieceType.WHITE),
+  		    new Knight(PieceType.WHITE),
+            new King(PieceType.WHITE),
+  		    new Queen(PieceType.WHITE),
+  		    new Knight(PieceType.WHITE),
+  		    new Bioshop(PieceType.WHITE),
+  		    new Rock(PieceType.WHITE)
   	    ];
     }
 }

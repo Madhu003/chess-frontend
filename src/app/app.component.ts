@@ -3,152 +3,156 @@ import { ChessArrangementService } from "./chess-arrangement.service";
 import { Cell } from "./cell";
 import { Pawn } from "../piece/pawn";
 import { PlayerState } from "./player-state";
+import { PieceType } from "./piece-type.enum";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-  chessArrangementService: ChessArrangementService;
+    chessArrangementService: ChessArrangementService;
 
-  constructor(chessArrangementService: ChessArrangementService) {
-    this.chessArrangementService = chessArrangementService;
-  }
-
-  name = "Madhu";
-  grid = [];
-  selectedCell = null;
-  whiteStateObject = new PlayerState("white");
-  blackStateObject = new PlayerState("black");
-
-  ngOnInit() {
-    for (var i = 0; i < 8; i++) {
-      var gridByY = [];
-      for (var j = 0; j < 8; j++) {
-        gridByY.push(new Cell(j, i));
-      }
-      this.grid.push(gridByY);
+    constructor(chessArrangementService: ChessArrangementService) {
+        this.chessArrangementService = chessArrangementService;
     }
 
-    this.grid.forEach(row => {
-      row.forEach(cell => {
-        if (cell.y == 6) {
-          cell.piece = new Pawn("white");
+    name = "Madhu";
+    grid = [];
+    selectedCell = null;
+    whiteStateObject = new PlayerState(PieceType.WHITE);
+    blackStateObject = new PlayerState(PieceType.BLACK);
+
+    ngOnInit() {
+        for (var i = 0; i < 8; i++) {
+            var gridByY = [];
+            for (var j = 0; j < 8; j++) {
+                gridByY.push(new Cell(j, i));
+            }
+            this.grid.push(gridByY);
         }
 
-        if (cell.y == 1) {
-          cell.piece = new Pawn("black");
-        }
+        this.grid.forEach(row => {
+            row.forEach(cell => {
+                if (cell.y == 6) {
+                    cell.piece = new Pawn(PieceType.WHITE);
+                }
 
-        if (cell.y == 0) {
-          cell.piece = this.chessArrangementService.blackTeamStartingPoisition[
-            cell.x
-          ];
-        }
+                if (cell.y == 1) {
+                    cell.piece = new Pawn(PieceType.BLACK);
+                }
 
-        if (cell.y == 7) {
-          cell.piece = this.chessArrangementService.whiteTeamStartingPoisition[
-            cell.x
-          ];
-        }
-      });
-    });
+                if (cell.y == 0) {
+                    cell.piece = this.chessArrangementService.blackTeamStartingPoisition[
+                        cell.x
+                    ];
+                }
 
-    this.whiteStateObject.haveChance = true;
+                if (cell.y == 7) {
+                    cell.piece = this.chessArrangementService.whiteTeamStartingPoisition[
+                        cell.x
+                    ];
+                }
+            });
+        });
 
-    console.log(this);
-  }
+        this.whiteStateObject.haveChance = true;
 
-  getCell(x, y): Cell {
-    var fetchedCell;
-    this.grid.forEach(row => {
-      row.forEach(cell => {
-        if (cell.x == x && cell.y == y) {
-          fetchedCell = cell;
-        }
-      });
-    });
+        console.log(this);
+    }
 
-    return fetchedCell;
-  }
+    getCell(x, y): Cell {
+        var fetchedCell;
+        this.grid.forEach(row => {
+            row.forEach(cell => {
+                if (cell.x == x && cell.y == y) {
+                    fetchedCell = cell;
+                }
+            });
+        });
 
-  clearAllCellFromAtiveState() {
-    this.grid.forEach(row => {
-      row.forEach(cell => {
-        cell.isActiveCell = 0;
-      });
-    });
+        return fetchedCell;
+    }
 
-    this.selectedCell = null;
-  }
+    clearAllCellFromAtiveState() {
+        this.grid.forEach(row => {
+            row.forEach(cell => {
+                cell.isActiveCell = 0;
+            });
+        });
 
-  onClick(cell) {
-        if(this.selectedCell && cell.piece == this.selectedCell.piece) {
+        this.selectedCell = null;
+    }
+
+    onClick(cell) {
+
+        if (this.selectedCell && cell.piece == this.selectedCell.piece) {
             this.clearAllCellFromAtiveState();
-        }else if(!this.selectedCell && !cell.piece) {
+        } else if (!this.selectedCell && !cell.piece) {
             this.clearAllCellFromAtiveState();
-        } else if(!this.selectedCell && cell.piece) {
+        } else if (!this.selectedCell && cell.piece) {
             this.setPieceActivatedAndShowPath(cell);
-        } else if(this.selectedCell && cell.isActiveCell) {
+        } else if (this.selectedCell && cell.isActiveCell) {
             // need code for move piece
             cell.piece = this.selectedCell.piece;
             this.selectedCell.piece = null;
             this.selectedCell = null;
             this.clearAllCellFromAtiveState();
             this.switchPlayer();
-        } else if(this.selectedCell && cell.piece) {
+        } else if (this.selectedCell && cell.piece) {
             this.setPieceActivatedAndShowPath(cell);
-        } else if(this.selectedCell && !cell.piece) {
+        } else if (this.selectedCell && !cell.piece) {
             this.clearAllCellFromAtiveState();
         }
-    }  
- 
-
-  switchPlayer(){
-      if(this.whiteStateObject.haveChance){
-          this.whiteStateObject.haveChance = false;
-          this.blackStateObject.haveChance = true;
-      } else{
-          this.whiteStateObject.haveChance = true;
-          this.blackStateObject.haveChance = false;
-      }
-  }
-
-  setPieceActivatedAndShowPath(cell) {
-      this.clearAllCellFromAtiveState();
-
-      if (cell.piece) {
-      cell.isActiveCell = 1;
-      this.selectedCell = cell;
-
-      let paths = cell.piece.getArrayOfPosibleMove(cell.x, cell.y);
-      console.log(paths)
-      for (let i = 0; i < paths.length; i++) {
-        let path = paths[i];
-        if (path) {
-          if (path instanceof Array) {
-            for (let j = 0; j < path.length; j++) {
-              let coordinates = path[j];
-              let cellForPatch = this.getCell(coordinates.x, coordinates.y);
-
-              if (cellForPatch.piece) {
-                break;
-              } else {
-                cellForPatch.isActiveCell = 1;
-              }
-            }
-          } else {
-            let cellForPatch = this.getCell(path.x, path.y);
-
-            if (cellForPatch.piece) {
-              break;
-            } else {
-              cellForPatch.isActiveCell = 1;
-            }
-          }
-        }
-      }
     }
-  }
+
+    switchPlayer() {
+        if (this.whiteStateObject.haveChance) {
+            this.whiteStateObject.haveChance = false;
+            this.blackStateObject.haveChance = true;
+        } else {
+            this.whiteStateObject.haveChance = true;
+            this.blackStateObject.haveChance = false;
+        }
+    }
+
+    setPieceActivatedAndShowPath(cell) {
+        this.clearAllCellFromAtiveState();
+
+        if (cell.piece) {
+            cell.isActiveCell = 1;
+            this.selectedCell = cell;
+
+            let paths = cell.piece.getArrayOfPosibleMove(cell.x, cell.y);
+            console.log(paths);
+            for (let i = 0; i < paths.length; i++) {
+                let path = paths[i];
+                if (path) {
+                    if (path instanceof Array) {
+                        for (let j = 0; j < path.length; j++) {
+                            let coordinates = path[j];
+                            let cellForPatch = this.getCell(
+                                coordinates.x,
+                                coordinates.y
+                            );
+
+                            if (cellForPatch.piece) {
+                                break;
+                            } else {
+                                cellForPatch.isActiveCell = 1;
+                            }
+                        }
+                    } else {
+                        let cellForPatch = this.getCell(path.x, path.y);
+
+                        if (cellForPatch.piece) {
+                            break;
+                        } else {
+                            cellForPatch.isActiveCell = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

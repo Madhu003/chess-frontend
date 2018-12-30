@@ -1,10 +1,12 @@
-import {Piece} from "./piece";
+import { Piece } from "./piece";
+import { PieceType } from "../app/piece-type.enum";
 
 export class Bioshop implements Piece{
 	symbol: String;
+	type: PieceType;
 
 	constructor(type){
-		this.symbol = (type == "white") ? "&#9815;" : "&#9821;";
+		this.symbol = (type == PieceType.WHITE) ? "&#9815;" : "&#9821;";
 	}
 
 	getArrayOfPosibleMove(x, y) {
