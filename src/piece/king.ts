@@ -10,20 +10,18 @@ export class King  implements Piece{
 	}
 
 	getArrayOfPosibleMove(x, y) {
-		let possiblePaths = [];
-		if(this.type == "white") {
-			possiblePaths.push({x: x-1, y: y});
-			possiblePaths.push({x: x - 1, y: y - 1});
-			possiblePaths.push({x: x, y: y - 1});
-			possiblePaths.push({x: x + 1, y: y - 1});
-			possiblePaths.push({x: x + 1, y: y});	
-		} else {
-			possiblePaths.push({x: x-1, y: y});
-			possiblePaths.push({x: x - 1, y: y + 1});
-			possiblePaths.push({x: x, y: y - 1});
-			possiblePaths.push({x: x + 1, y: y + 1});
-			possiblePaths.push({x: x + 1, y: y});
-		}
+		let possiblePaths = [
+			[{x: x, y: y - 1}],
+			[{x: x + 1, y: y - 1}],
+			[{x: x + 1, y: y}],
+			[{x: x + 1, y: y + 1}],
+			[{x: x, y: y + 1}],
+			[{x: x - 1, y: y + 1}],
+			[{x: x - 1, y: y - 1}],
+			[{x: x - 1, y: y}]
+		];
+		
+
 		return possiblePaths;
 	}
 }

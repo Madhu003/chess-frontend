@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { ChessArrangementService } from "./chess-arrangement.service";
 import { Cell } from "./cell";
 import { Pawn } from "../piece/pawn";
+import { PlayerState } from "./player-state";
 
 @Component({
   selector: "app-root",
@@ -18,6 +19,8 @@ export class AppComponent {
   name = "Madhu";
   grid = [];
   selectedCell = null;
+  whiteStateObject = new PlayerState("white");
+  blackStateObject = new PlayerState("black");
 
   ngOnInit() {
     for (var i = 0; i < 8; i++) {
@@ -52,6 +55,8 @@ export class AppComponent {
       });
     });
 
+    this.whiteStateObject.haveChance = true;
+
     console.log(this);
   }
 
@@ -79,23 +84,35 @@ export class AppComponent {
   }
 
   onClick(cell) {
-    if(this.selectedCell && cell.piece == this.selectedCell.piece) {
-        this.clearAllCellFromAtiveState();
-    }else if(!this.selectedCell && !cell.piece) {
-        this.clearAllCellFromAtiveState();
-    } else if(!this.selectedCell && cell.piece) {
-        this.setPieceActivatedAndShowPath(cell);
-    } else if(this.selectedCell && cell.isActiveCell) {
-        // need code for move piece
-        cell.piece = this.selectedCell.piece;
-        this.selectedCell.piece = null;
-        this.selectedCell = null;
-        this.clearAllCellFromAtiveState();
-    } else if(this.selectedCell && cell.piece) {
-        this.setPieceActivatedAndShowPath(cell);
-    } else if(this.selectedCell && !cell.piece) {
-        this.clearAllCellFromAtiveState();
+        if(this.selectedCell && cell.piece == this.selectedCell.piece) {
+            this.clearAllCellFromAtiveState();
+        }else if(!this.selectedCell && !cell.piece) {
+            this.clearAllCellFromAtiveState();
+        } else if(!this.selectedCell && cell.piece) {
+            this.setPieceActivatedAndShowPath(cell);
+        } else if(this.selectedCell && cell.isActiveCell) {
+            // need code for move piece
+            cell.piece = this.selectedCell.piece;
+            this.selectedCell.piece = null;
+            this.selectedCell = null;
+            this.clearAllCellFromAtiveState();
+            this.switchPlayer();
+        } else if(this.selectedCell && cell.piece) {
+            this.setPieceActivatedAndShowPath(cell);
+        } else if(this.selectedCell && !cell.piece) {
+            this.clearAllCellFromAtiveState();
+        }
     }  
+ 
+
+  switchPlayer(){
+      if(this.whiteStateObject.haveChance){
+          this.whiteStateObject.haveChance = false;
+          this.blackStateObject.haveChance = true;
+      } else{
+          this.whiteStateObject.haveChance = true;
+          this.blackStateObject.haveChance = false;
+      }
   }
 
   setPieceActivatedAndShowPath(cell) {
