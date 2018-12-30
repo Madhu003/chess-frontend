@@ -35,7 +35,6 @@ export class Rock  implements Piece{
 				rightPath.push(right);	
 			}						
 		}
-		console.log([downPath, upPath, leftPath, rightPath])
 
 		return [downPath, upPath, leftPath, rightPath];
 	}

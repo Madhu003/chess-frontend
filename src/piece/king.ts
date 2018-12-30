@@ -6,7 +6,7 @@ export class King  implements Piece{
 
 	constructor(type){
 		this.type = type;
-		this.symbol = (type == "white") ? "&#9812;" : "&#9818;";
+		this.symbol = (type == "white") ? "&#9813;" : "&#9819;";
 	}
 
 	getArrayOfPosibleMove(x, y) {

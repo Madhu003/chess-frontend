@@ -113,18 +113,17 @@ export class AppComponent {
           if (path instanceof Array) {
             for (let j = 0; j < path.length; j++) {
               let coordinates = path[j];
-
               let cellForPatch = this.getCell(coordinates.x, coordinates.y);
-              console.log(cellForPatch);
+
               if (cellForPatch.piece) {
-                // break;
+                break;
               } else {
                 cellForPatch.isActiveCell = 1;
               }
             }
           } else {
             let cellForPatch = this.getCell(path.x, path.y);
-            console.log(cellForPatch);
+
             if (cellForPatch.piece) {
               break;
             } else {
