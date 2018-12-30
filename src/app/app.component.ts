@@ -79,10 +79,11 @@ export class AppComponent {
   }
 
   onClick(cell) {
-    if(!this.selectedCell && !cell.piece) {
+    if(this.selectedCell && cell.piece == this.selectedCell.piece) {
+        this.clearAllCellFromAtiveState();
+    }else if(!this.selectedCell && !cell.piece) {
         this.clearAllCellFromAtiveState();
     } else if(!this.selectedCell && cell.piece) {
-        this.clearAllCellFromAtiveState();
         this.setPieceActivatedAndShowPath(cell);
     } else if(this.selectedCell && cell.isActiveCell) {
         // need code for move piece
@@ -98,6 +99,8 @@ export class AppComponent {
   }
 
   setPieceActivatedAndShowPath(cell) {
+      this.clearAllCellFromAtiveState();
+
       if (cell.piece) {
       cell.isActiveCell = 1;
       this.selectedCell = cell;
@@ -108,13 +111,13 @@ export class AppComponent {
         let path = paths[i];
         if (path) {
           if (path instanceof Array) {
-            for (let j = 0; j < path.length; i++) {
-              let cordinates = path[j];
+            for (let j = 0; j < path.length; j++) {
+              let coordinates = path[j];
 
-              let cellForPatch = this.getCell(cordinates.x, cordinates.y);
+              let cellForPatch = this.getCell(coordinates.x, coordinates.y);
               console.log(cellForPatch);
               if (cellForPatch.piece) {
-                break;
+                // break;
               } else {
                 cellForPatch.isActiveCell = 1;
               }

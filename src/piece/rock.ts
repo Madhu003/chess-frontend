@@ -30,11 +30,12 @@ export class Rock  implements Piece{
 				leftPath.push(left);	
 			}	
 
-			let right = { x: x - manipluationFector, y : y} ;
+			let right = { x: x + manipluationFector, y : y} ;
 			if(right.x >= 0 && right.x <= 7 && right.y >= 0 && right.y <= 7){
 				rightPath.push(right);	
 			}						
 		}
+		console.log([downPath, upPath, leftPath, rightPath])
 
 		return [downPath, upPath, leftPath, rightPath];
 	}
