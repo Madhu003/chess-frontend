@@ -1,14 +1,14 @@
-import { Component } from "@angular/core";
-import { ChessArrangementService } from "./chess-arrangement.service";
-import { Cell } from "./cell";
-import { Pawn } from "../piece/pawn";
-import { PlayerState } from "./player-state";
-import { PieceType } from "./piece-type.enum";
+import { Component } from '@angular/core';
+import { ChessArrangementService } from './chess-arrangement.service';
+import { Cell } from './cell';
+import { Pawn } from '../piece/pawn';
+import { PlayerState } from './player-state';
+import { PieceType } from './piece-type.enum';
 
 @Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.css"]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent {
     chessArrangementService: ChessArrangementService;
@@ -17,16 +17,17 @@ export class AppComponent {
         this.chessArrangementService = chessArrangementService;
     }
 
-    name = "Madhu";
+    name = 'Madhu';
     grid = [];
     selectedCell = null;
     whiteStateObject = new PlayerState(PieceType.WHITE);
     blackStateObject = new PlayerState(PieceType.BLACK);
+    activePlayer: PieceType = PieceType.WHITE;
 
     ngOnInit() {
-        for (var i = 0; i < 8; i++) {
-            var gridByY = [];
-            for (var j = 0; j < 8; j++) {
+        for (let i = 0; i < 8; i++) {
+            let gridByY = [];
+            for (let j = 0; j < 8; j++) {
                 gridByY.push(new Cell(j, i));
             }
             this.grid.push(gridByY);
@@ -62,7 +63,7 @@ export class AppComponent {
     }
 
     getCell(x, y): Cell {
-        var fetchedCell;
+        let fetchedCell;
         this.grid.forEach(row => {
             row.forEach(cell => {
                 if (cell.x == x && cell.y == y) {
@@ -85,24 +86,29 @@ export class AppComponent {
     }
 
     onClick(cell) {
-
-        if (this.selectedCell && cell.piece == this.selectedCell.piece) {
-            this.clearAllCellFromAtiveState();
-        } else if (!this.selectedCell && !cell.piece) {
-            this.clearAllCellFromAtiveState();
-        } else if (!this.selectedCell && cell.piece) {
-            this.setPieceActivatedAndShowPath(cell);
-        } else if (this.selectedCell && cell.isActiveCell) {
-            // need code for move piece
-            cell.piece = this.selectedCell.piece;
-            this.selectedCell.piece = null;
-            this.selectedCell = null;
-            this.clearAllCellFromAtiveState();
-            this.switchPlayer();
-        } else if (this.selectedCell && cell.piece) {
-            this.setPieceActivatedAndShowPath(cell);
-        } else if (this.selectedCell && !cell.piece) {
-            this.clearAllCellFromAtiveState();
+        console.log()
+        if ((this.selectedCell && !cell.piece) || (cell.piece && cell.piece.type == this.activePlayer)) {
+            if (this.selectedCell && cell.piece == this.selectedCell.piece) {
+                this.clearAllCellFromAtiveState();
+            } else if (!this.selectedCell && !cell.piece) {
+                this.clearAllCellFromAtiveState();
+            } else if (!this.selectedCell && cell.piece) {
+                this.setPieceActivatedAndShowPath(cell);
+            } else if (this.selectedCell && cell.isActiveCell) {
+                // need code for move piece
+                cell.piece = this.selectedCell.piece;
+                this.selectedCell.piece = null;
+                this.selectedCell = null;
+                this.clearAllCellFromAtiveState();
+                if (cell.piece instanceof Pawn) {
+                    cell.piece.isPlayedOnce = true;
+                }
+                this.switchPlayer();
+            } else if (this.selectedCell && cell.piece) {
+                this.setPieceActivatedAndShowPath(cell);
+            } else if (this.selectedCell && !cell.piece) {
+                this.clearAllCellFromAtiveState();
+            }
         }
     }
 
@@ -110,10 +116,14 @@ export class AppComponent {
         if (this.whiteStateObject.haveChance) {
             this.whiteStateObject.haveChance = false;
             this.blackStateObject.haveChance = true;
+            this.activePlayer = PieceType.BLACK;
         } else {
             this.whiteStateObject.haveChance = true;
             this.blackStateObject.haveChance = false;
+            this.activePlayer = PieceType.WHITE;
         }
+
+        console.log(this.activePlayer);
     }
 
     setPieceActivatedAndShowPath(cell) {
