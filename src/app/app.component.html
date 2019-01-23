@@ -1,14 +1,14 @@
-<div style="border: 10px solid #7b6e6e;width: 500px;height: 500px;margin-left: 25%;">
-	<div *ngFor="let row of  grid" style="clear: both;">
-		<div *ngFor = "let cell of row">
-			<div class="cell" (click)="onClick(cell);" [ngStyle]="{'box-shadow': ((cell.isActiveCell) ? 'inset 0 0 10px 3px #ff00eb' : 'inset 0 0 10px 3px transparent')}">
-				<small style="position: absolute;">{{cell.x}}, {{cell.y}}</small>
-				<div [innerHTML]="cell.piece?.symbol" style="color: black;font-size: 38px; margin-left: 4px;"></div>
-			</div>	
+<div class="board" style="width: 500px;height: 500px;margin-left: 25%;">
+	<div style="border: 10px solid #7b6e6e;width: 500px;height: 500px;margin-left: 50px;float: left;">
+		<div *ngFor="let row of  grid" style="clear: both;">
+			<div *ngFor="let cell of row">
+				<div class="cell" (click)="onClick(cell);" [ngStyle]="{'box-shadow': ((cell.isActiveCell) ? 'inset 0 0 10px 3px #ff00eb' : 'inset 0 0 10px 3px transparent')}">
+					<small style="position: absolute;">{{cell.x}}, {{cell.y}}</small>
+					<div [innerHTML]="cell.piece?.symbol" style="color: black;font-size: 38px; margin-left: 4px;"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-
+<br>
 Chance Has => {{whiteStateObject.haveChance ? 'White' : 'Black'}}
-
-

@@ -20,6 +20,7 @@ export class AppComponent {
     name = 'Madhu';
     grid = [];
     selectedCell = null;
+    boardCordinates = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     whiteStateObject = new PlayerState(PieceType.WHITE);
     blackStateObject = new PlayerState(PieceType.BLACK);
     activePlayer: PieceType = PieceType.WHITE;
