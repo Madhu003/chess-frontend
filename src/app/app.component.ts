@@ -5,6 +5,7 @@ import { Pawn } from '../piece/pawn';
 import { PlayerState } from './player-state';
 import { PieceType } from './piece-type.enum';
 
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -15,6 +16,7 @@ export class AppComponent {
 
     constructor(chessArrangementService: ChessArrangementService) {
         this.chessArrangementService = chessArrangementService;
+        // console.log({ AngularFireDatabase, FirebaseListObservable });
     }
 
     name = 'Madhu';
